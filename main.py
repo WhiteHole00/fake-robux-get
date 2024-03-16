@@ -54,6 +54,7 @@ async def isRobuxGet(cnt):
                 {"name": "Current Robux", "value": value, "inline": False}
             ]
         }
+        
         payload = {
             "content": "@everyone",
             "embeds": [embed]
